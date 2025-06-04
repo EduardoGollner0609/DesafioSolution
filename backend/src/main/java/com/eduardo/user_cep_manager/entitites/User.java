@@ -3,17 +3,51 @@ package com.eduardo.user_cep_manager.entitites;
 import java.time.Instant;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuarios")
 public class User {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "nome", nullable = false)
 	private String name;
+
+	@Column(nullable = false, unique = true)
 	private String cpf;
+
+	@Column(nullable = false)
 	private String cep;
+
+	@Column(name = "rua", nullable = false)
 	private String street;
+
+	@Column(name = "logradouro", nullable = false)
 	private String neighborhood;
+
+	@Column(name = "cidade", nullable = false)
 	private String city;
+
+	@Column(name = "estado", nullable = false)
 	private String state;
+
+	@Column(name = "data_criacao", nullable = false)
+	@CreationTimestamp
 	private Instant createdAt;
+
+	@Column(name = "data_atualizacao")
+	@UpdateTimestamp
 	private Instant updatedAt;
 
 	public User() {
