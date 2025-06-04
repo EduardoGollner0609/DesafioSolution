@@ -2,8 +2,8 @@ package com.eduardo.user_cep_manager.gateways.implementations;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
@@ -14,10 +14,14 @@ import com.eduardo.user_cep_manager.entitites.Address;
 import com.eduardo.user_cep_manager.gateways.abstractions.CepGateway;
 import com.eduardo.user_cep_manager.gateways.exceptions.GatewayException;
 
+@Service
 public class ViaCepGateway implements CepGateway {
 
-	@Autowired
-	private RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
+
+	public ViaCepGateway(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
 	@Override
 	public Optional<Address> findAddressByCep(String cep) {
@@ -40,18 +44,18 @@ public class ViaCepGateway implements CepGateway {
 
 		} catch (Exception e) {
 			switch (e) {
-			 case HttpClientErrorException error -> {
-                 throw new GatewayException("Erro de cliente ao consultar ViaCEP: " + error.getMessage());
-             }
-             case ResourceAccessException error -> {
-                 throw new GatewayException("Erro de rede ao consultar ViaCEP: " + error.getMessage());
-             }
-             case RestClientException error -> {
-                 throw new GatewayException("Erro na comunicação com ViaCEP: " + error.getMessage());
-             }
-             default -> {
-                 throw new GatewayException("Erro inesperado ao consultar ViaCEP: " + e.getMessage());
-             }
+			case HttpClientErrorException error -> {
+				throw new GatewayException("Erro de cliente ao consultar ViaCEP: " + error.getMessage());
+			}
+			case ResourceAccessException error -> {
+				throw new GatewayException("Erro de rede ao consultar ViaCEP: " + error.getMessage());
+			}
+			case RestClientException error -> {
+				throw new GatewayException("Erro na comunicação com ViaCEP: " + error.getMessage());
+			}
+			default -> {
+				throw new GatewayException("Erro inesperado ao consultar ViaCEP: " + e.getMessage());
+			}
 			}
 		}
 		return Optional.empty();

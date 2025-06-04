@@ -39,6 +39,9 @@ public class User {
 	@Embedded
 	private Address address;
 
+	public User() {
+	}
+
 	public User(Long id, String name, String cpf, Instant createdAt, Instant updatedAt, Address address) {
 		super();
 		this.id = id;
