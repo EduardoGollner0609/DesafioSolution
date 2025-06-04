@@ -13,6 +13,8 @@ import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
 import com.eduardo.user_cep_manager.dtos.responses.UserResponseDTO;
 import com.eduardo.user_cep_manager.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -24,7 +26,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<UserResponseDTO> create(@RequestBody UserRequestDTO requestDTO) {
+	public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO requestDTO) {
 		UserResponseDTO responseDTO = service.create(requestDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id())
 				.toUri();
