@@ -1,5 +1,7 @@
 package com.eduardo.user_cep_manager.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
@@ -28,6 +30,14 @@ public class UserService {
 		copyDtoToEntity(user, requestDTO);
 		updateAddress(user, requestDTO.cep());
 		return new UserResponseDTO(repository.save(user));
+	}
+
+	// Read (FindAll)
+	public List<UserResponseDTO> findAll() {
+		List<User> users = repository.findAll();
+		// Sintaxe Opcional para retornar com lambda: return users.stream().map(u -> new UserResponseDTO(u)).toList();
+		return users.stream().map(UserResponseDTO::new).toList();
+
 	}
 
 	private void validateCpf(String cpf) {
