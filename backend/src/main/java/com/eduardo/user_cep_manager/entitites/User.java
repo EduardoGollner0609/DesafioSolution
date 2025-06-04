@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,21 +28,6 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String cpf;
 
-	@Column(nullable = false)
-	private String cep;
-
-	@Column(name = "rua", nullable = false)
-	private String street;
-
-	@Column(name = "logradouro", nullable = false)
-	private String neighborhood;
-
-	@Column(name = "cidade", nullable = false)
-	private String city;
-
-	@Column(name = "estado", nullable = false)
-	private String state;
-
 	@Column(name = "data_criacao", nullable = false)
 	@CreationTimestamp
 	private Instant createdAt;
@@ -50,22 +36,17 @@ public class User {
 	@UpdateTimestamp
 	private Instant updatedAt;
 
-	public User() {
-	}
+	@Embedded
+	private Address address;
 
-	public User(Long id, String name, String cpf, String cep, String street, String neighborhood, String city,
-			String state, Instant createdAt, Instant updatedAt) {
+	public User(Long id, String name, String cpf, Instant createdAt, Instant updatedAt, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
-		this.cep = cep;
-		this.street = street;
-		this.neighborhood = neighborhood;
-		this.city = city;
-		this.state = state;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -92,46 +73,6 @@ public class User {
 		this.cpf = cpf;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getNeighborhood() {
-		return neighborhood;
-	}
-
-	public void setNeighborhood(String neighborhood) {
-		this.neighborhood = neighborhood;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
@@ -146,6 +87,14 @@ public class User {
 
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
