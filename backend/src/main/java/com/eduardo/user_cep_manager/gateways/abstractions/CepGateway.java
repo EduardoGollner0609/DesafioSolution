@@ -1,4 +1,4 @@
-package com.eduardo.user_cep_manager.gateways;
+package com.eduardo.user_cep_manager.gateways.abstractions;
 
 import java.util.Optional;
 

@@ -9,10 +9,10 @@ public class Address {
 	@Column(nullable = false)
 	private String cep;
 
-	@Column(name = "rua", nullable = false)
+	@Column(name = "logradouro", nullable = false)
 	private String street;
 
-	@Column(name = "logradouro", nullable = false)
+	@Column(name = "bairro", nullable = false)
 	private String neighborhood;
 
 	@Column(name = "cidade", nullable = false)
