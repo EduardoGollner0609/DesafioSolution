@@ -38,7 +38,7 @@ public class UserService {
 
 	private void updateAddress(User user, String cep) {
 		Address address = cepGateway.findAddressByCep(cep).orElseThrow(() -> {
-			throw new ResourceNotFoundException(String.format("Cep %s não encontrado.", cep));
+			throw new ResourceNotFoundException(String.format("Cep %s não foi encontrado.", cep));
 		});
 		user.setAddress(address);
 	}
