@@ -1,8 +1,10 @@
 package com.eduardo.user_cep_manager.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,11 @@ public class UserController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id())
 				.toUri();
 		return ResponseEntity.created(uri).body(responseDTO);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<UserResponseDTO>> findAll() {
+		List<UserResponseDTO> responseDTO = service.findAll();
+		return ResponseEntity.ok(responseDTO);
 	}
 }
