@@ -1,17 +1,20 @@
 package com.eduardo.user_cep_manager.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.eduardo.user_cep_manager.dtos.requests.UserInsertDTO;
 import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
+import com.eduardo.user_cep_manager.dtos.requests.UserUpdateDTO;
 import com.eduardo.user_cep_manager.dtos.responses.UserResponseDTO;
 import com.eduardo.user_cep_manager.entitites.Address;
 import com.eduardo.user_cep_manager.entitites.User;
 import com.eduardo.user_cep_manager.gateways.abstractions.CepGateway;
 import com.eduardo.user_cep_manager.repositories.UserRepository;
-import com.eduardo.user_cep_manager.services.exceptions.CpfExistsException;
+import com.eduardo.user_cep_manager.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -25,51 +28,37 @@ public class UserService {
 	}
 
 	// Create
-	public UserResponseDTO create(UserRequestDTO requestDTO) {
-		validateCpf(requestDTO.cpf());
+	public UserResponseDTO create(UserInsertDTO requestDTO) {
 		User user = new User();
 		copyDtoToEntity(user, requestDTO);
-		updateAddress(user, requestDTO.cep());
+		updateAddress(user, requestDTO.getCep());
 		return new UserResponseDTO(repository.save(user));
 	}
 
 	// Read (FindAll)
 	public List<UserResponseDTO> findAll() {
 		List<User> users = repository.findAll();
-		// Sintaxe Opcional para retornar com lambda: return users.stream().map(u -> new
-		// UserResponseDTO(u)).toList();
 		return users.stream().map(UserResponseDTO::new).toList();
-
 	}
 
 	// Update
-	public UserResponseDTO update(Long userId, UserRequestDTO requestDTO) {
-
-		User user = repository.findById(userId).orElseThrow(
-				() -> new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado", userId)));
-
-		Optional<User> userWithCpf = repository.findByCpf(requestDTO.cpf());
-
-		if (userWithCpf.isPresent() && !userWithCpf.get().getId().equals(userId)) {
-			throw new CpfExistsException("Cpf já existe.");
+	public UserResponseDTO update(Long userId, UserUpdateDTO requestDTO) {
+		try {
+			User user = repository.getReferenceById(userId);
+			copyDtoToEntity(user, requestDTO);
+			updateAddress(user, requestDTO.getCep());
+			return new UserResponseDTO(repository.save(user));
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId));
 		}
-
-		copyDtoToEntity(user, requestDTO);
-		updateAddress(user, requestDTO.cep());
-		return new UserResponseDTO(repository.save(user));
 	}
 
+	// Delete
 	public void deleteById(Long userId) {
 		if (!repository.existsById(userId)) {
 			throw new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId));
 		}
 		repository.deleteById(userId);
-	}
-
-	private void validateCpf(String cpf) {
-		if (repository.existsByCpf(cpf)) {
-			throw new CpfExistsException("Cpf já existe.");
-		}
 	}
 
 	private void updateAddress(User user, String cep) {
@@ -80,8 +69,8 @@ public class UserService {
 	}
 
 	private void copyDtoToEntity(User user, UserRequestDTO requestDTO) {
-		user.setName(requestDTO.name());
-		user.setCpf(requestDTO.cpf());
+		user.setName(requestDTO.getName());
+		user.setCpf(requestDTO.getCpf());
 	}
 
 }

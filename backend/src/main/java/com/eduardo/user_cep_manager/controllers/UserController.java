@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
+import com.eduardo.user_cep_manager.dtos.requests.UserInsertDTO;
+import com.eduardo.user_cep_manager.dtos.requests.UserUpdateDTO;
 import com.eduardo.user_cep_manager.dtos.responses.UserResponseDTO;
 import com.eduardo.user_cep_manager.services.UserService;
 
@@ -31,7 +32,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO requestDTO) {
+	public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserInsertDTO requestDTO) {
 		UserResponseDTO responseDTO = service.create(requestDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id())
 				.toUri();
@@ -46,7 +47,7 @@ public class UserController {
 
 	@PutMapping(value = "/{userId}")
 	public ResponseEntity<UserResponseDTO> create(@PathVariable Long userId,
-			@RequestBody @Valid UserRequestDTO requestDTO) {
+			@RequestBody @Valid UserUpdateDTO requestDTO) {
 		UserResponseDTO responseDTO = service.update(userId, requestDTO);
 		return ResponseEntity.ok(responseDTO);
 	}

@@ -1,7 +1,5 @@
 package com.eduardo.user_cep_manager.repositories;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	boolean existsByCpf(String cpf);
 
-	Optional<User> findByCpf(String cpf);
+	User findByCpf(String cpf);
 
 }
