@@ -3,7 +3,6 @@ import editIcon from '../../assets/edit-icon.svg';
 import trashIcon from '../../assets/trash-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDeleteUserMutation } from '../../hooks/useUsers';
-import { useState } from 'react';
 
 type Props = {
     id: number;

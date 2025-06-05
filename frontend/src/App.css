@@ -7,8 +7,10 @@
 
   --color-font-primary: #fff;
   --color-font-secondary: #000;
+  --color-font-error: #ce1d1d;
 
   --border-color-primary: #000;
+  --border-color-error: #ce1d1d;
 }
 
 * {

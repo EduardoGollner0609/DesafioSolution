@@ -25,52 +25,6 @@
   margin-bottom: 10px;
 }
 
-.form-space form .form-input,
-.form-space form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-space form {
-  gap: 15px;
-}
-
-.form-space form .form-input label {
-  padding-left: 10px;
-}
-
-.form-space form .form-input input {
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid var(--border-color-primary);
-  padding: 4px 12px;
-  font-size: 16px;
-}
-
-.form-button {
-  display: flex;
-  justify-content: center;
-}
-
-.form-button button {
-  margin-top: 10px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid var(--border-color-primary);
-  color: var(--color-font-secondary);
-  width: 100%;
-  max-width: 200px;
-  padding: 4px 8px;
-  font-weight: 600;
-  transition: 0.3s;
-  font-size: 16px;
-}
-
-.form-button button:hover {
-  background-color: var(--background-color-tertiary);
-  color: var(--color-font-primary);
-}
-
 .requisits-space {
   background-color: var(--background-color-tertiary);
   border-radius: 20px;
