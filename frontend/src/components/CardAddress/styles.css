@@ -1,6 +1,41 @@
 .card-address {
   background-color: var(--background-color-secondary);
   padding: 15px 20px;
+  transition: 0.3s;
+}
+
+.card-address-functions {
+  display: flex;
+  justify-content: end;
+  gap: 6px;
+}
+
+.card-address-function-update,
+.card-address-function-delete {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border: 2px solid var(--border-color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card-address-function-update img,
+.card-address-function-delete img {
+  height: 18px;
+  width: 18px;
+}
+
+.card-address-function-update:hover,
+.card-address-function-delete:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-address:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-address h4 {

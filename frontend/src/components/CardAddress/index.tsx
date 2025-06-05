@@ -1,4 +1,6 @@
 import './styles.css';
+import editIcon from '../../assets/edit-icon.svg';
+import trashIcon from '../../assets/trash-icon.svg';
 
 type Props = {
     id: number;
@@ -14,6 +16,14 @@ type Props = {
 export default function CardAddress({ id, name, cpf, cep, street, neighboord, city, state }: Props) {
     return (
         <div className="card-address card">
+            <div className="card-address-functions">
+                <div className="card-address-function-update">
+                    <img src={editIcon} alt="" />
+                </div>
+                <div className="card-address-function-delete">
+                    <img src={trashIcon} alt="" />
+                </div>
+            </div>
             <h4>Usuario {id}</h4>
             <div className="card-address-field">
                 <h5>Nome: </h5> <p>{name}</p>

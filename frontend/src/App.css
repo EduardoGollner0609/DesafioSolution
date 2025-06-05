@@ -6,6 +6,8 @@
   --background-color-tertiary: #000;
 
   --color-font-primary: #fff;
+
+  --border-color-primary: #000;
 }
 
 * {
@@ -18,6 +20,12 @@
 a {
   text-decoration: none;
   color: unset;
+}
+
+button {
+  background-color: unset;
+  border: none;
+  cursor: pointer;
 }
 
 main {
