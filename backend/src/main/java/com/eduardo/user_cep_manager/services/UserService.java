@@ -37,6 +37,13 @@ public class UserService {
 		return new UserResponseDTO(repository.save(user));
 	}
 
+	// Read(FindById)
+	public UserResponseDTO findById(Long userId) {
+		User user = repository.findById(userId).orElseThrow(
+				() -> new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado", userId)));
+		return new UserResponseDTO(user);
+	}
+
 	// Read (FindAll)
 	@Transactional(readOnly = true)
 	public List<UserResponseDTO> findAll() {
