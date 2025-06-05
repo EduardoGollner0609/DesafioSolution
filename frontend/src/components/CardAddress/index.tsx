@@ -1,6 +1,7 @@
 import './styles.css';
 import editIcon from '../../assets/edit-icon.svg';
 import trashIcon from '../../assets/trash-icon.svg';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     id: number;
@@ -8,16 +9,19 @@ type Props = {
     cpf: string;
     cep: string;
     street: string;
-    neighboord: string;
+    neighborhood: string;
     city: string;
     state: string;
 }
 
-export default function CardAddress({ id, name, cpf, cep, street, neighboord, city, state }: Props) {
+export default function CardAddress({ id, name, cpf, cep, street, neighborhood, city, state }: Props) {
+
+    const navigate = useNavigate();
+
     return (
         <div className="card-address card">
             <div className="card-address-functions">
-                <div className="card-address-function-update">
+                <div className="card-address-function-update" onClick={() => navigate(`/form-page/${id}`)}>
                     <img src={editIcon} alt="Edit Icon" />
                 </div>
                 <div className="card-address-function-delete">
@@ -38,7 +42,7 @@ export default function CardAddress({ id, name, cpf, cep, street, neighboord, ci
                 <h5>Logradouro: </h5> <p>{street}</p>
             </div>
             <div className="card-address-field">
-                <h5>Bairro:</h5> <p>{neighboord}</p>
+                <h5>Bairro:</h5> <p>{neighborhood}</p>
             </div>
             <div className="card-address-field">
                 <h5>Cidade: </h5> <p>{city}</p>

@@ -1,19 +1,51 @@
+import './styles.css';
 import CardAddress from '../../../components/CardAddress';
 import CardPlus from '../../../components/CardPlus';
-import './styles.css';
+import { findAll } from '../../../services/user-service';
+import { useQuery } from '@tanstack/react-query';
+import type { UserResponseDTO } from '../../../models/user';
 
 export default function AddressListPage() {
+
+    const { data: users, isLoading, error } = useQuery({
+        queryKey: ['users'],
+        queryFn: findAll
+    });
+
+    if (isLoading) return <p className="loading">Carregando...</p>;
+    if (error) return <p>Erro: {error.message}</p>;
+
     return (
         <main>
             <section id="address-list-section" className="container">
                 <h2 className="address-list-title">Lista de endereços</h2>
-                <div className="address-list">
-                    <CardAddress id={1} name="Eduardo" cpf="19999999" cep="29072320"
-                        street="Rua henrique martins tuche" neighboord="Segurança do Lar"
-                        city="Vitória" state="Espirito Santo" />
+                {
+                    users?.data.length === 0 &&
                     <CardPlus />
+                }
+                <div className="address-list">
+                    {
+                        users?.data && users.data.length > 0 && (
+                            <>
+                                {users.data.map((user: UserResponseDTO) => (
+                                    <CardAddress
+                                        key={user.id}
+                                        id={user.id}
+                                        name={user.name}
+                                        cpf={user.cpf}
+                                        cep={user.address.cep}
+                                        street={user.address.street}
+                                        neighborhood={user.address.neighborhood}
+                                        city={user.address.city}
+                                        state={user.address.state}
+                                    />
+                                ))}
+                                <CardPlus />
+                            </>
+                        )
+                    }
                 </div>
             </section>
-        </main>
+        </main >
     );
 }

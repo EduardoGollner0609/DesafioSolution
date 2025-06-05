@@ -12,8 +12,8 @@ export function findById(id: number) {
   return axios.get(url + `/${id}`);
 }
 
-export function findByAll() {
-  return axios.get(url);
+export async function findAll() {
+  return await axios.get(url);
 }
 
 export function update(id: number, requestDTO: UserRequestDTO) {

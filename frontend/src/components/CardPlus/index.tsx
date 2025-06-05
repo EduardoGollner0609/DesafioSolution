@@ -4,7 +4,8 @@ import './styles.css';
 export default function CardPlus() {
     return (
         <div className="card-plus">
-            <Link to="/form-page" className="plus">+</Link>
+            <Link to="/form-page/create" className="plus">+</Link>
+            <p>Criar usuário</p>
         </div>
     );
 }

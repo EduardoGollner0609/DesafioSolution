@@ -13,7 +13,7 @@ export default function App() {
         <Route path="/" element={<Page />}>
           <Route index element={<HomePage />} />
           <Route path="address-list" element={<AddressListPage />} />
-          <Route path="form-page" element={<FormPage />} />
+          <Route path="form-page/:userId" element={<FormPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

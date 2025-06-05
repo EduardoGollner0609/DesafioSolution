@@ -1,13 +1,23 @@
+import { useParams } from 'react-router-dom';
 import './styles.css';
 
 export default function FormPage() {
+
+    const params = useParams();
+
+    const userId = params.userId;
+
+    const isEditing = userId !== "create";
+
+    const operationString = isEditing ? "Atualizar" : "Criar";
+
     return (
         <main>
             <section id="form-page-section">
                 <div className="container">
                     <div className="card-form">
                         <div className="form-space">
-                            <h3>Criar usuário</h3>
+                            <h3>{operationString} usuário {operationString === "Atualizar" && userId}</h3>
                             <form action="">
                                 <div className="form-input">
                                     <label>Nome</label>
@@ -22,7 +32,7 @@ export default function FormPage() {
                                     <input type="text" placeholder="Digite seu CEP" />
                                 </div>
                                 <div className="form-button">
-                                    <button>Criar</button>
+                                    <button>{operationString}</button>
                                 </div>
                             </form>
                         </div>
