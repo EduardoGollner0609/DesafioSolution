@@ -3,6 +3,7 @@ package com.eduardo.user_cep_manager.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.user_cep_manager.dtos.requests.UserInsertDTO;
 import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
@@ -28,6 +29,7 @@ public class UserService {
 	}
 
 	// Create
+	@Transactional
 	public UserResponseDTO create(UserInsertDTO requestDTO) {
 		User user = new User();
 		copyDtoToEntity(user, requestDTO);
@@ -36,12 +38,14 @@ public class UserService {
 	}
 
 	// Read (FindAll)
+	@Transactional(readOnly = true)
 	public List<UserResponseDTO> findAll() {
 		List<User> users = repository.findAll();
 		return users.stream().map(UserResponseDTO::new).toList();
 	}
 
 	// Update
+	@Transactional
 	public UserResponseDTO update(Long userId, UserUpdateDTO requestDTO) {
 		try {
 			User user = repository.getReferenceById(userId);
@@ -54,6 +58,7 @@ public class UserService {
 	}
 
 	// Delete
+	@Transactional
 	public void deleteById(Long userId) {
 		if (!repository.existsById(userId)) {
 			throw new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId));
