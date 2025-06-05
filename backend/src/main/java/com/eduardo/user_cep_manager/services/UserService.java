@@ -46,7 +46,7 @@ public class UserService {
 	public UserResponseDTO update(Long userId, UserRequestDTO requestDTO) {
 
 		User user = repository.findById(userId).orElseThrow(
-				() -> new ResourceNotFoundException(String.format("Usuário do cpf %s não foi encontrado", requestDTO)));
+				() -> new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado", userId)));
 
 		Optional<User> userWithCpf = repository.findByCpf(requestDTO.cpf());
 
@@ -57,6 +57,13 @@ public class UserService {
 		copyDtoToEntity(user, requestDTO);
 		updateAddress(user, requestDTO.cep());
 		return new UserResponseDTO(repository.save(user));
+	}
+
+	public void deleteById(Long userId) {
+		if (!repository.existsById(userId)) {
+			throw new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId));
+		}
+		repository.deleteById(userId);
 	}
 
 	private void validateCpf(String cpf) {
