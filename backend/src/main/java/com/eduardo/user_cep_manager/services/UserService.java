@@ -35,9 +35,24 @@ public class UserService {
 	// Read (FindAll)
 	public List<UserResponseDTO> findAll() {
 		List<User> users = repository.findAll();
-		// Sintaxe Opcional para retornar com lambda: return users.stream().map(u -> new UserResponseDTO(u)).toList();
+		// Sintaxe Opcional para retornar com lambda: return users.stream().map(u -> new
+		// UserResponseDTO(u)).toList();
 		return users.stream().map(UserResponseDTO::new).toList();
 
+	}
+
+	// Update
+	public UserResponseDTO update(Long userId, UserRequestDTO requestDTO) {
+		User user = repository.findByCpf(requestDTO.cpf()).orElseThrow(
+				() -> new ResourceNotFoundException(String.format("Usuário do cpf %s não foi encontrado", requestDTO)));
+
+		if (user.getId() != userId) {
+			throw new CpfExistsException("Cpf já existe.");
+		}
+
+		copyDtoToEntity(user, requestDTO);
+		updateAddress(user, requestDTO.cep());
+		return new UserResponseDTO(repository.save(user));
 	}
 
 	private void validateCpf(String cpf) {
