@@ -17,7 +17,7 @@ export default function FormPage() {
                     <div className="card-form">
                         <div className="form-space">
                             <h3>{isEditing ? `Atualizar usuário ${userId}` : "Criar usuário"}</h3>
-                            <UserForm isEditing={isEditing} />
+                            <UserForm id={Number(userId)} isEditing={isEditing} />
                         </div>
                         <div className="requisits-space">
                             <h3>Requisitos</h3>

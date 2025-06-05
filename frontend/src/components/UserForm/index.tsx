@@ -2,8 +2,12 @@ import "./styles.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
+import { useCreateUserMutation, useUpdateUserMutation } from "../../hooks/useUsers";
+import type { UserRequestDTO } from "../../models/user";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
+    id: number | undefined
     isEditing: boolean,
 }
 
@@ -19,16 +23,37 @@ const userSchema = z.object({
 
 type UserSchema = z.infer<typeof userSchema>;
 
-export default function UserForm({ isEditing }: Props) {
+export default function UserForm({ id, isEditing }: Props) {
+
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(userSchema)
     });
 
+    const createUser = useCreateUserMutation();
+
+    const updateUser = useUpdateUserMutation();
+
     function handleUserForm(data: UserSchema) {
         console.log(data);
 
+        const requestDTO: UserRequestDTO = data;
+
+        if (isEditing) {
+            updateUser.mutate({ id, requestDTO });
+        }
+        else {
+            createUser.mutate(requestDTO);
+        }
+
+
+
+        navigate("/address-list");
+
     }
+
+
 
     return (
         <form onSubmit={handleSubmit(handleUserForm)}>

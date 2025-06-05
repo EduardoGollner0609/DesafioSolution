@@ -3,7 +3,7 @@ import { BASE_URL } from "../utils/system";
 import type { UserRequestDTO } from "../models/user";
 
 type UpdateUserParams = {
-  id: number;
+  id: number | undefined;
   requestDTO: UserRequestDTO;
 };
 
