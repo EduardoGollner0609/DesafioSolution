@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav .github-code-space a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header nav .github-code-space img {
+  height: 32px;
+  width: 32px;
+}
+
+@media (max-width: 660px) {
+  header nav {
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+}
