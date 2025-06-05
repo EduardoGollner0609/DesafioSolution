@@ -1,0 +1,19 @@
+.card-address {
+  background-color: var(--background-color-secondary);
+  padding: 15px 20px;
+}
+
+.card-address h4 {
+  text-align: center;
+}
+
+.card-address-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.card-address-field h5 {
+  margin-right: 5px;
+}

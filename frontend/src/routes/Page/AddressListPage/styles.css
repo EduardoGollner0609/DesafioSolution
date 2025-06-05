@@ -1,0 +1,9 @@
+.address-list-title {
+  text-align: center;
+}
+
+.address-list {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+}

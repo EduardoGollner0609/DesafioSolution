@@ -8,9 +8,6 @@
   width: 100%;
   margin: 0 auto;
   padding: 30px 40px;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: var(--background-color-secondary);
 }
 
 .card-welcome h3 {
