@@ -1,4 +1,5 @@
 import CardAddress from '../../../components/CardAddress';
+import CardPlus from '../../../components/CardPlus';
 import './styles.css';
 
 export default function AddressListPage() {
@@ -10,6 +11,7 @@ export default function AddressListPage() {
                     <CardAddress id={1} name="Eduardo" cpf="19999999" cep="29072320"
                         street="Rua henrique martins tuche" neighboord="Segurança do Lar"
                         city="Vitória" state="Espirito Santo" />
+                    <CardPlus />
                 </div>
             </section>
         </main>

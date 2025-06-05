@@ -1,0 +1,19 @@
+.card-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card-plus .plus {
+  border: 2px solid var(--border-color-primary);
+  padding: 4px 14px;
+  border-radius: 50%;
+  font-size: 26px;
+  transition: 0.3s;
+}
+
+.card-plus .plus:hover {
+  background-color: var(--background-color-tertiary);
+  color: var(--color-font-primary);
+}

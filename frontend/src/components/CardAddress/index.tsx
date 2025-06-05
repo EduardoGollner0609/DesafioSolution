@@ -18,10 +18,10 @@ export default function CardAddress({ id, name, cpf, cep, street, neighboord, ci
         <div className="card-address card">
             <div className="card-address-functions">
                 <div className="card-address-function-update">
-                    <img src={editIcon} alt="" />
+                    <img src={editIcon} alt="Edit Icon" />
                 </div>
                 <div className="card-address-function-delete">
-                    <img src={trashIcon} alt="" />
+                    <img src={trashIcon} alt="Delete Icon" />
                 </div>
             </div>
             <h4>Usuario {id}</h4>
