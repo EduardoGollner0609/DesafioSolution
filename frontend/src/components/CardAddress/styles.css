@@ -52,3 +52,10 @@
 .card-address-field h5 {
   margin-right: 5px;
 }
+
+.loading-delete {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}

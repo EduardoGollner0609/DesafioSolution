@@ -49,7 +49,7 @@ export function useDeleteUserMutation() {
 
   return useMutation({
     mutationFn: deleteById,
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
