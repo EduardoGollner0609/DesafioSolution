@@ -1,6 +1,7 @@
 package com.eduardo.user_cep_manager.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -43,10 +44,13 @@ public class UserService {
 
 	// Update
 	public UserResponseDTO update(Long userId, UserRequestDTO requestDTO) {
-		User user = repository.findByCpf(requestDTO.cpf()).orElseThrow(
+
+		User user = repository.findById(userId).orElseThrow(
 				() -> new ResourceNotFoundException(String.format("Usuário do cpf %s não foi encontrado", requestDTO)));
 
-		if (user.getId() != userId) {
+		Optional<User> userWithCpf = repository.findByCpf(requestDTO.cpf());
+
+		if (userWithCpf.isPresent() && !userWithCpf.get().getId().equals(userId)) {
 			throw new CpfExistsException("Cpf já existe.");
 		}
 
