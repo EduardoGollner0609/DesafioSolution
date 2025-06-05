@@ -1,0 +1,81 @@
+.card-form {
+  margin-top: 20px;
+  background-color: var(--background-color-secondary);
+  border-radius: 20px;
+  display: flex;
+}
+
+.form-space,
+.requisits-space {
+  padding: 20px 40px 30px;
+}
+
+.card-form > div {
+  flex: 1;
+}
+
+.card-form h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-space form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-space form .form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-space form .form-input input {
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--border-color-primary);
+  padding: 4px 12px;
+  font-size: 16px;
+}
+
+.form-button {
+  display: flex;
+  justify-content: center;
+}
+
+.form-button button {
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--border-color-primary);
+  color: var(--color-font-secondary);
+  width: 100%;
+  max-width: 200px;
+  padding: 4px 8px;
+  font-weight: 600;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.form-button button:hover {
+  background-color: var(--background-color-tertiary);
+  color: var(--color-font-primary);
+}
+
+.requisits-space {
+  background-color: var(--background-color-tertiary);
+  border-radius: 20px;
+}
+
+.requisits-space {
+  color: var(--color-font-primary);
+}
+
+.requisists-list li {
+  margin-bottom: 10px;
+}
+
+@media(max-width: 660px) {
+  .requisits-space {
+    display: none;
+  }
+}

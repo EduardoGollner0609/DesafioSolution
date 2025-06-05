@@ -6,6 +6,7 @@
   --background-color-tertiary: #000;
 
   --color-font-primary: #fff;
+  --color-font-secondary: #000;
 
   --border-color-primary: #000;
 }
@@ -26,6 +27,17 @@ button {
   background-color: unset;
   border: none;
   cursor: pointer;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
 }
 
 main {
