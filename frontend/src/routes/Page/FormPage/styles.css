@@ -1,3 +1,9 @@
+#form-page-section {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
 .card-form {
   margin-top: 20px;
   background-color: var(--background-color-secondary);
@@ -79,6 +85,10 @@
 }
 
 @media (max-width: 660px) {
+  .form-space {
+    padding: 20px 20px 30px;
+  }
+
   .requisits-space {
     display: none;
   }

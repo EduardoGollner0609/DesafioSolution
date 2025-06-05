@@ -1,16 +1,12 @@
 import './styles.css';
 import CardAddress from '../../../components/CardAddress';
 import CardPlus from '../../../components/CardPlus';
-import { findAll } from '../../../services/user-service';
-import { useQuery } from '@tanstack/react-query';
 import type { UserResponseDTO } from '../../../models/user';
+import { useUsersQuery } from '../../../hooks/useUsers';
 
 export default function AddressListPage() {
 
-    const { data: users, isLoading, error } = useQuery({
-        queryKey: ['users'],
-        queryFn: findAll
-    });
+    const { data: users, isLoading, error } = useUsersQuery();
 
     if (isLoading) return <p className="loading">Carregando...</p>;
     if (error) return <p>Erro: {error.message}</p>;

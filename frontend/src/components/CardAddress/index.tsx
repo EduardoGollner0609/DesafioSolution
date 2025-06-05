@@ -18,6 +18,7 @@ export default function CardAddress({ id, name, cpf, cep, street, neighborhood, 
 
     const navigate = useNavigate();
 
+
     return (
         <div className="card-address card">
             <div className="card-address-functions">
