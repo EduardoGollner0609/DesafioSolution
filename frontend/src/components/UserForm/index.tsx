@@ -2,12 +2,15 @@ import "./styles.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
-import { useCreateUserMutation, useUpdateUserMutation } from "../../hooks/useUsers";
+import { useCreateUserMutation, useUpdateUserMutation, useUserByIdQuery } from "../../hooks/useUsers";
 import type { UserRequestDTO } from "../../models/user";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import CardError from "../CardError";
+import { AxiosError } from "axios";
 
 type Props = {
-    id: number | undefined
+    id: number | null
     isEditing: boolean,
 }
 
@@ -27,7 +30,7 @@ export default function UserForm({ id, isEditing }: Props) {
 
     const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(userSchema)
     });
 
@@ -35,46 +38,94 @@ export default function UserForm({ id, isEditing }: Props) {
 
     const updateUser = useUpdateUserMutation();
 
-    function handleUserForm(data: UserSchema) {
-        console.log(data);
+    const [errorMessage, setErrorMessage] = useState("");
 
+    const findByIdUser = useUserByIdQuery(id!, {
+        enabled: id != null
+    });
+
+    useEffect(() => {
+        if (id != null && findByIdUser.data?.data) {
+            reset({
+                name: findByIdUser.data.data.name,
+                cpf: findByIdUser.data.data.cpf,
+                cep: findByIdUser.data.data.address.cep
+            });
+        }
+    }, [id, findByIdUser.data]);
+
+    function handleUserForm(data: UserSchema) {
         const requestDTO: UserRequestDTO = data;
 
-        if (isEditing) {
-            updateUser.mutate({ id, requestDTO });
+        if (isEditing && id != null) {
+            updateUser.mutate(
+                { id, requestDTO },
+                {
+                    onSuccess: () => {
+                        navigate("/address-list");
+                    },
+                    onError: (error) => {
+                        if (error instanceof AxiosError) {
+                            setErrorMessage(error.response?.data.error);
+                        }
+                    }
+                }
+            );
+        } else {
+            createUser.mutate(
+                requestDTO,
+                {
+                    onSuccess: () => {
+                        navigate("/address-list");
+                    },
+                    onError: (error) => {
+                        if (error instanceof AxiosError) {
+                            setErrorMessage(error.response?.data.error);
+                        }
+                    }
+                }
+            );
         }
-        else {
-            createUser.mutate(requestDTO);
-        }
-
-
-
-        navigate("/address-list");
-
     }
 
 
-
     return (
-        <form onSubmit={handleSubmit(handleUserForm)}>
-            <div className="form-input">
-                <label>Nome</label>
-                <input className={errors.name && "input-error"} type="text" placeholder="Digite seu Nome" {...register('name')} />
-                {errors.name?.message && <p className="input-error-message">{errors.name?.message}</p>}
-            </div>
-            <div className="form-input">
-                <label>CPF</label>
-                <input className={errors.cpf && "input-error"} type="text" placeholder="Digite seu CPF"  {...register('cpf')} />
-                {errors.cpf?.message && <p className="input-error-message">{errors.cpf?.message}</p>}
-            </div>
-            <div className="form-input">
-                <label>CEP</label>
-                <input className={errors.cep && "input-error"} type="text" placeholder="Digite seu CEP"  {...register('cep')} />
-                {errors.cep?.message && <p className="input-error-message">{errors.cep?.message}</p>}
-            </div>
-            <div className="form-button">
-                <button onClick={handleSubmit(handleUserForm)}>Salvar</button>
-            </div>
-        </form>
+        <>
+            {
+                id != null && !findByIdUser.error && findByIdUser.isLoading &&
+                <p className="loading">Carregando...</p>
+            }
+            {
+                !findByIdUser.error && !findByIdUser.isLoading
+                && <form onSubmit={handleSubmit(handleUserForm)}>
+                    <div className="form-input">
+                        <label>Nome</label>
+                        <input className={errors.name && "input-error"} type="text" placeholder="Digite seu Nome" {...register('name')} />
+                        {errors.name?.message && <p className="input-error-message">{errors.name?.message}</p>}
+                    </div>
+                    <div className="form-input">
+                        <label>CPF</label>
+                        <input className={errors.cpf && "input-error"} type="text" placeholder="Digite seu CPF"  {...register('cpf')} />
+                        {errors.cpf?.message && <p className="input-error-message">{errors.cpf?.message}</p>}
+                    </div>
+                    <div className="form-input">
+                        <label>CEP</label>
+                        <input className={errors.cep && "input-error"} type="text" placeholder="Digite seu CEP"  {...register('cep')} />
+                        {errors.cep?.message && <p className="input-error-message">{errors.cep?.message}</p>}
+                    </div>
+                    <div className="form-button">
+                        <button onClick={handleSubmit(handleUserForm)}>Salvar</button>
+                    </div>
+                </form>
+            }
+            {
+                findByIdUser.error && !findByIdUser.isLoading &&
+                <p className="error-form-message">{`Usuário do id ${id} não foi encontrado`}</p>
+            }
+            {
+                errorMessage.length > 0 &&
+                <CardError message={errorMessage} onClose={() => setErrorMessage("")} />
+            }
+        </>
     );
 }

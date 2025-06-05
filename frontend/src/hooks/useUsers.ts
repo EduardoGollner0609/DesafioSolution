@@ -14,10 +14,11 @@ export function useUsersQuery() {
   });
 }
 
-export function useUserByIdQuery(id: number) {
+export function useUserByIdQuery(id: number, en: { enabled: boolean }) {
   return useQuery({
     queryKey: ["user", id],
     queryFn: () => findById(id),
+    retry: 1,
     enabled: !!id,
   });
 }

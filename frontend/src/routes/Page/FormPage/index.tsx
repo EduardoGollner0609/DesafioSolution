@@ -6,9 +6,9 @@ export default function FormPage() {
 
     const params = useParams();
 
-    const userId = params.userId;
+    const isEditing = params.userId !== "create";
 
-    const isEditing = userId !== "create";
+    const userId = Number(params.userId);
 
     return (
         <main>
@@ -17,7 +17,7 @@ export default function FormPage() {
                     <div className="card-form">
                         <div className="form-space">
                             <h3>{isEditing ? `Atualizar usuário ${userId}` : "Criar usuário"}</h3>
-                            <UserForm id={Number(userId)} isEditing={isEditing} />
+                            <UserForm id={userId ? userId : null} isEditing={isEditing} />
                         </div>
                         <div className="requisits-space">
                             <h3>Requisitos</h3>
