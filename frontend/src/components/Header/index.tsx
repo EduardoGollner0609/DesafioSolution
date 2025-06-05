@@ -1,11 +1,12 @@
 import './styles.css';
 import githubIcon from '../../assets/github-icon.svg';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
     return (
         <header>
             <nav className="container">
-                <h1>Address Manager</h1>
+                <Link to="/"><h1>Address Manager</h1></Link>
                 <div className="github-code-space">
                     <a href="https://github.com/EduardoGollner0609/DesafioSolution">
                         <img src={githubIcon} alt="Github Icon" />

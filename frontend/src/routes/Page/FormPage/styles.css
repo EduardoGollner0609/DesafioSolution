@@ -19,15 +19,18 @@
   margin-bottom: 10px;
 }
 
+.form-space form .form-input,
 .form-space form {
   display: flex;
   flex-direction: column;
+}
+
+.form-space form {
   gap: 15px;
 }
 
-.form-space form .form-input {
-  display: flex;
-  flex-direction: column;
+.form-space form .form-input label {
+  padding-left: 10px;
 }
 
 .form-space form .form-input input {

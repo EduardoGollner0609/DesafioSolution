@@ -11,15 +11,15 @@ export default function FormPage() {
                             <form action="">
                                 <div className="form-input">
                                     <label>Nome</label>
-                                    <input type="text" />
+                                    <input type="text" placeholder="Digite seu Nome" />
                                 </div>
                                 <div className="form-input">
                                     <label>CPF</label>
-                                    <input type="text" />
+                                    <input type="text" placeholder="Digite seu CPF" />
                                 </div>
                                 <div className="form-input">
                                     <label>CEP</label>
-                                    <input type="text" />
+                                    <input type="text" placeholder="Digite seu CEP" />
                                 </div>
                                 <div className="form-button">
                                     <button>Criar</button>
