@@ -52,14 +52,14 @@ public class UserController {
 	}
 
 	@PutMapping(value = "/{userId}")
-	public ResponseEntity<UserResponseDTO> create(@PathVariable Long userId,
+	public ResponseEntity<UserResponseDTO> update(@PathVariable Long userId,
 			@RequestBody @Valid UserUpdateDTO requestDTO) {
 		UserResponseDTO responseDTO = service.update(userId, requestDTO);
 		return ResponseEntity.ok(responseDTO);
 	}
 
 	@DeleteMapping(value = "/{userId}")
-	public ResponseEntity<UserResponseDTO> create(@PathVariable Long userId) {
+	public ResponseEntity<UserResponseDTO> deleteById(@PathVariable Long userId) {
 		service.deleteById(userId);
 		return ResponseEntity.noContent().build();
 	}
