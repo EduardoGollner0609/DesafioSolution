@@ -22,9 +22,10 @@ export default function FormPage() {
                         <div className="requisits-space">
                             <h3>Requisitos</h3>
                             <ul className="requisists-list">
-                                <li>- Campo de nome, cpf e cep são obrigatórios</li>
-                                <li>- O CPF deve possuir 11 digitos</li>
-                                <li>- O CPF deve possuir 11 digitos</li>
+                                <li>- Campo de nome, CPF e CEP são obrigatórios.</li>
+                                <li>- O CPF deve possuir 11 digitos seja com ou sem pontuação.</li>
+                                <li>- O nome deve possuir no minímo 6 caracteres</li>
+                                <li>- O CEP deve possuir no minímo 8 caracteres</li>
                             </ul>
                         </div>
                     </div>

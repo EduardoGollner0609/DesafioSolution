@@ -6,9 +6,9 @@ export default function Header() {
     return (
         <header>
             <nav className="container">
-                <Link to="/"><h1>Address Manager</h1></Link>
+                <Link to="/"><h1>User Cep Manager</h1></Link>
                 <div className="github-code-space">
-                    <a href="https://github.com/EduardoGollner0609/DesafioSolution">
+                    <a href="https://github.com/EduardoGollner0609/UserCepManager">
                         <img src={githubIcon} alt="Github Icon" />
                         <p>Ver código fonte</p>
                     </a>
