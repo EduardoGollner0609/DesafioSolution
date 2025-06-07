@@ -25,105 +25,82 @@ const userSchema = z.object({
 });
 
 type UserSchema = z.infer<typeof userSchema>;
+// ...imports...
 
 export default function UserForm({ id, isEditing }: Props) {
-
     const navigate = useNavigate();
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<UserSchema>({
         resolver: zodResolver(userSchema)
     });
 
     const createUser = useCreateUserMutation();
-
     const updateUser = useUpdateUserMutation();
-
     const [errorMessage, setErrorMessage] = useState("");
 
-    const findByIdUser = useUserByIdQuery(id!, {
+    const { data: user, isError, isLoading } = useUserByIdQuery(id!, {
         enabled: id != null
     });
 
     useEffect(() => {
-        if (id != null && findByIdUser.data?.data) {
+        if (id != null && user?.data?.data) {
             reset({
-                name: findByIdUser.data.data.name,
-                cpf: findByIdUser.data.data.cpf,
-                cep: findByIdUser.data.data.address.cep
+                name: user.data.data.name,
+                cpf: user.data.data.cpf,
+                cep: user.data.data.address.cep
             });
         }
-    }, [id, findByIdUser.data]);
+    }, [id, user]);
 
-    function handleUserForm(data: UserSchema) {
+    useEffect(() => {
+        if (isError) navigate("/");
+    }, [isError]);
+
+    const handleUserForm = (data: UserSchema) => {
         const requestDTO: UserRequestDTO = data;
 
-        if (isEditing && id != null) {
-            updateUser.mutate(
-                { id, requestDTO },
-                {
-                    onSuccess: () => {
-                        navigate("/address-list");
-                    },
-                    onError: (error) => {
-                        if (error instanceof AxiosError) {
-                            setErrorMessage(error.response?.data.error);
-                        }
-                    }
-                }
-            );
-        } else {
-            createUser.mutate(
-                requestDTO,
-                {
-                    onSuccess: () => {
-                        navigate("/address-list");
-                    },
-                    onError: (error) => {
-                        if (error instanceof AxiosError) {
-                            setErrorMessage(error.response?.data.error);
-                        }
-                    }
-                }
-            );
-        }
-    }
+        const onSuccess = () => navigate("/address-list");
+        const onError = (error: unknown) => {
+            if (error instanceof AxiosError) {
+                setErrorMessage(error.response?.data?.error || "Erro ao salvar usuário.");
+            }
+        };
 
+        if (isEditing && id != null) {
+            updateUser.mutate({ id, requestDTO }, { onSuccess, onError });
+        } else {
+            createUser.mutate(requestDTO, { onSuccess, onError });
+        }
+    };
+
+    const isFormLoading = (id != null && isLoading) || createUser.isPending || updateUser.isPending;
 
     return (
         <>
-            {
-                id != null && !findByIdUser.error && findByIdUser.isLoading &&
-                <p className="loading">Carregando...</p>
-            }
-            {
-                !findByIdUser.error && !findByIdUser.isLoading
-                && <form onSubmit={handleSubmit(handleUserForm)}>
+            {isFormLoading && <p className="loading">Carregando...</p>}
+            {!isFormLoading &&
+                <form onSubmit={handleSubmit(handleUserForm)}>
                     <div className="form-input">
                         <label>Nome</label>
-                        <input className={errors.name && "input-error"} type="text" placeholder="Digite seu Nome" {...register('name')} />
-                        {errors.name?.message && <p className="input-error-message">{errors.name?.message}</p>}
+                        <input autoComplete="off" className={errors.name && "input-error"} type="text" placeholder="Digite seu Nome" {...register('name')} />
+                        {errors.name?.message && <p className="input-error-message">{errors.name.message}</p>}
                     </div>
                     <div className="form-input">
                         <label>CPF</label>
-                        <input className={errors.cpf && "input-error"} type="text" placeholder="Digite seu CPF"  {...register('cpf')} />
-                        {errors.cpf?.message && <p className="input-error-message">{errors.cpf?.message}</p>}
+                        <input autoComplete="off" className={errors.cpf && "input-error"} type="text" placeholder="Digite seu CPF" {...register('cpf')} />
+                        {errors.cpf?.message && <p className="input-error-message">{errors.cpf.message}</p>}
                     </div>
                     <div className="form-input">
                         <label>CEP</label>
-                        <input className={errors.cep && "input-error"} type="text" placeholder="Digite seu CEP"  {...register('cep')} />
-                        {errors.cep?.message && <p className="input-error-message">{errors.cep?.message}</p>}
+                        <input autoComplete="off" className={errors.cep && "input-error"} type="text" placeholder="Digite seu CEP" {...register('cep')} />
+                        {errors.cep?.message && <p className="input-error-message">{errors.cep.message}</p>}
                     </div>
                     <div className="form-button">
-                        <button onClick={handleSubmit(handleUserForm)}>Salvar</button>
+                        <button type="submit">Salvar</button>
                     </div>
                 </form>
             }
-            {
-                findByIdUser.error && !findByIdUser.isLoading &&
-                <p className="error-form-message">{`Usuário do id ${id} não foi encontrado`}</p>
-            }
-            {
-                errorMessage.length > 0 &&
+            {errorMessage &&
                 <CardError message={errorMessage} onClose={() => setErrorMessage("")} />
             }
         </>

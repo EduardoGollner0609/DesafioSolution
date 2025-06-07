@@ -1,0 +1,50 @@
+.background-card-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  z-index: 9999;
+  background-color: #000000a6;
+}
+
+.card-confirm {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--background-color-secondary);
+  box-shadow: 0px 4px 6px #0000004b;
+  padding: 20px;
+  border-radius: 10px;
+  color: var(--fb-color-primary);
+  text-align: center;
+}
+
+.card-confirm h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.card-confirm p {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.card-confirm-buttons-space {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.button-card-confirm {
+  background-color: var(--background-color-tertiary);
+  color: var(--color-font-primary);
+  box-shadow: 0px 4px 6px #0000004b;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
