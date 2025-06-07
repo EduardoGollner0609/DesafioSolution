@@ -52,6 +52,13 @@ public class User {
 		this.address = address;
 	}
 
+	public User(Long id, String name, String cpf, Address address) {
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.address = address;
+	}
+
 	public Long getId() {
 		return id;
 	}
