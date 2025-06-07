@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDeleteUserMutation } from '../../hooks/useUsers';
 import { useState } from 'react';
 import CardConfirm from '../CardConfirm';
+import { AxiosError } from 'axios';
 
 type Props = {
     id: number;
@@ -18,16 +19,26 @@ type Props = {
 }
 
 export default function CardAddress({ id, name, cpf, cep, street, neighborhood, city, state }: Props) {
-
+    
     const navigate = useNavigate();
 
     const deleteUser = useDeleteUserMutation();
 
-    const [cardConfirmMessage, setcardConfirmMessage] = useState("");
+    const [cardConfirmMessage, setCardConfirmMessage] = useState("");
 
     function handleDeleteIconClick() {
-        deleteUser.mutate(id);
+        deleteUser.mutate(id, {
+            onSuccess: () => {
+                setCardConfirmMessage("");
+            },
+            onError: (error) => {
+                if (error instanceof AxiosError) {
+                    setCardConfirmMessage("Erro ao deletar o usuário: " + error);
+                }
+            }
+        });
     }
+
 
     return (
         <>
@@ -39,7 +50,7 @@ export default function CardAddress({ id, name, cpf, cep, street, neighborhood, 
                                 <div className="card-address-function-update" onClick={() => navigate(`/form-page/${id}`)}>
                                     <img src={editIcon} alt="Edit Icon" />
                                 </div>
-                                <div className="card-address-function-delete" onClick={() => setcardConfirmMessage(`Tem certeza que deseja remover o usuário ${id}?`)}>
+                                <div className="card-address-function-delete" onClick={() => setCardConfirmMessage(`Tem certeza que deseja remover o usuário ${id}?`)}>
                                     <img src={trashIcon} alt="Delete Icon" />
                                 </div>
                             </div>
@@ -71,7 +82,7 @@ export default function CardAddress({ id, name, cpf, cep, street, neighborhood, 
                 }
             </div>
             {
-                cardConfirmMessage && <CardConfirm message={cardConfirmMessage} confirmFunction={handleDeleteIconClick} onClose={() => setcardConfirmMessage("")} />
+                cardConfirmMessage && <CardConfirm message={cardConfirmMessage} confirmFunction={handleDeleteIconClick} onClose={() => setCardConfirmMessage("")} />
             }
         </>
 
