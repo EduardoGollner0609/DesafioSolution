@@ -43,11 +43,11 @@ export default function UserForm({ id, isEditing }: Props) {
     });
 
     useEffect(() => {
-        if (id != null && user?.data?.data) {
+        if (id != null && user) {
             reset({
-                name: user.data.data.name,
-                cpf: user.data.data.cpf,
-                cep: user.data.data.address.cep
+                name: user.data.name,
+                cpf: user.data.cpf,
+                cep: user.data.address.cep
             });
         }
     }, [id, user]);
