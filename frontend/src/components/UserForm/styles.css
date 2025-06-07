@@ -62,7 +62,14 @@
   .form-space {
     padding: 15px 15px 20px;
   }
+}
+
+@media (max-width: 500px) {
+  .form-space form {
+    align-items: center;
+  }
   .form-input {
-    max-width: 200px !important;
+    max-width: 220px !important;
+    display: flex;
   }
 }
