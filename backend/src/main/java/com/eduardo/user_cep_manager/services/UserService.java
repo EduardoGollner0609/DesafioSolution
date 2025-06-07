@@ -56,8 +56,10 @@ public class UserService {
 	public UserResponseDTO update(Long userId, UserUpdateDTO requestDTO) {
 		try {
 			User user = repository.getReferenceById(userId);
+			if (!user.getAddress().getCep().equals(requestDTO.getCep())) {
+				updateAddress(user, requestDTO.getCep());
+			}
 			copyDtoToEntity(user, requestDTO);
-			updateAddress(user, requestDTO.getCep());
 			return new UserResponseDTO(repository.save(user));
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId));
