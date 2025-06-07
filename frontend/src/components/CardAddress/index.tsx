@@ -19,7 +19,7 @@ type Props = {
 }
 
 export default function CardAddress({ id, name, cpf, cep, street, neighborhood, city, state }: Props) {
-    
+
     const navigate = useNavigate();
 
     const deleteUser = useDeleteUserMutation();
@@ -28,17 +28,13 @@ export default function CardAddress({ id, name, cpf, cep, street, neighborhood, 
 
     function handleDeleteIconClick() {
         deleteUser.mutate(id, {
-            onSuccess: () => {
-                setCardConfirmMessage("");
-            },
             onError: (error) => {
                 if (error instanceof AxiosError) {
-                    setCardConfirmMessage("Erro ao deletar o usuário: " + error);
+                    setCardConfirmMessage("Erro ao deletar o usuário: " + error.response?.data?.error);
                 }
             }
         });
     }
-
 
     return (
         <>
