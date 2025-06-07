@@ -9,7 +9,7 @@ export default function AddressListPage() {
     const { data: users, isLoading, error } = useUsersQuery();
 
     if (isLoading) return <p className="loading">Carregando...</p>;
-    if (error) return <p>Erro: {error.message}</p>;
+    if (error) return <p className="error">Erro: {error.message}</p>;
 
     return (
         <main>
