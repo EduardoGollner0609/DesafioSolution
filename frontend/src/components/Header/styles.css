@@ -29,11 +29,17 @@ header nav .github-code-space img {
   header nav {
     flex-direction: column;
     gap: 5px;
-    padding: 8px 30px;
+    padding: 8px 20px;
     align-items: center;
   }
 
   header {
-    padding: 12px 10px;
+    padding: 12px 8px;
+  }
+}
+
+@media(max-width: 530px) {
+  header nav a h1 {
+    font-size: 20px;
   }
 }

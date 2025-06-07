@@ -21,7 +21,7 @@ export default function AddressListPage() {
                 }
                 <div className="address-list">
                     {
-                        users?.data && users.data.length > 0 && (
+                        users && users.data.length > 0 && (
                             <>
                                 {users.data.map((user: UserResponseDTO) => (
                                     <CardAddress

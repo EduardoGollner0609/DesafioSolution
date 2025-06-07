@@ -39,9 +39,6 @@
 }
 
 @media (max-width: 660px) {
-  .form-space {
-    padding: 20px 20px 30px;
-  }
 
   .requisits-space {
     display: none;
