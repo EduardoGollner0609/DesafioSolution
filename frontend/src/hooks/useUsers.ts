@@ -14,7 +14,7 @@ export function useUsersQuery() {
   });
 }
 
-export function useUserByIdQuery(id: number, en: { enabled: boolean }) {
+export function useUserByIdQuery(id: number) {
   return useQuery({
     queryKey: ["user", id],
     queryFn: () => findById(id),

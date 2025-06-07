@@ -25,7 +25,6 @@ const userSchema = z.object({
 });
 
 type UserSchema = z.infer<typeof userSchema>;
-// ...imports...
 
 export default function UserForm({ id, isEditing }: Props) {
     const navigate = useNavigate();
@@ -38,9 +37,7 @@ export default function UserForm({ id, isEditing }: Props) {
     const updateUser = useUpdateUserMutation();
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { data: user, isError, isLoading } = useUserByIdQuery(id!, {
-        enabled: id != null
-    });
+    const { data: user, isError, isLoading } = useUserByIdQuery(id!);
 
     useEffect(() => {
         if (id != null && user) {
