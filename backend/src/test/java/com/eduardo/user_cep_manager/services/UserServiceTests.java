@@ -15,7 +15,6 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
-import com.eduardo.user_cep_manager.dtos.requests.UserUpdateDTO;
 import com.eduardo.user_cep_manager.dtos.responses.UserResponseDTO;
 import com.eduardo.user_cep_manager.entitites.User;
 import com.eduardo.user_cep_manager.gateways.abstractions.CepGateway;
@@ -101,9 +100,8 @@ public class UserServiceTests {
 
 	@Test
 	public void updateShouldThrowResourceNotFoundExceptionWhenIdNotExists() {
-		UserUpdateDTO updateDTO = new UserUpdateDTO(user.getName(), user.getCpf(), user.getAddress().getCep());
 		ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
-				() -> service.update(nonExistingId, updateDTO));
+				() -> service.update(nonExistingId, requestDTO));
 
 		Assertions.assertEquals(String.format("Usuário do id %d não foi encontrado.", nonExistingId),
 				exception.getMessage());
