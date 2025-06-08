@@ -1,6 +1,6 @@
 # 🧑‍💼 User Cep Manager
 
-O **User Cep Manager** é uma aplicação Fullstack para cadastro e gerenciamento de usuários, com preenchimento automático de endereço via CEP. Esse projeto foi desenvolvido em uma etapa técnica de um processo seletivo. Foi feito o deploy da aplicação e está disponível na url: https://usercepmanager.netlify.app/  (Porém por ser uma hospedagem gratuita talvez a API demore um pouco para retornar os dados, prefira rodar local conforme descreve lá embaixo)
+O **User Cep Manager** é uma aplicação Fullstack para cadastro e gerenciamento de usuários, com preenchimento automático de endereço via CEP. Esse projeto foi desenvolvido em uma etapa técnica de um processo seletivo.
 
 ---
 
