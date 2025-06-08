@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eduardo.user_cep_manager.dtos.requests.UserInsertDTO;
 import com.eduardo.user_cep_manager.dtos.requests.UserRequestDTO;
-import com.eduardo.user_cep_manager.dtos.requests.UserUpdateDTO;
 import com.eduardo.user_cep_manager.dtos.responses.UserResponseDTO;
 import com.eduardo.user_cep_manager.entitites.Address;
 import com.eduardo.user_cep_manager.entitites.User;
@@ -30,7 +28,7 @@ public class UserService {
 
 	// Create
 	@Transactional
-	public UserResponseDTO create(UserInsertDTO requestDTO) {
+	public UserResponseDTO create(UserRequestDTO requestDTO) {
 		User user = new User();
 		copyDtoToEntity(user, requestDTO);
 		updateAddress(user, requestDTO.getCep());
@@ -40,7 +38,7 @@ public class UserService {
 	// Read(FindById)
 	public UserResponseDTO findById(Long userId) {
 		User user = repository.findById(userId).orElseThrow(
-				() -> new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado", userId)));
+				() -> new ResourceNotFoundException(String.format("Usuário do id %d não foi encontrado.", userId)));
 		return new UserResponseDTO(user);
 	}
 
@@ -53,7 +51,7 @@ public class UserService {
 
 	// Update
 	@Transactional
-	public UserResponseDTO update(Long userId, UserUpdateDTO requestDTO) {
+	public UserResponseDTO update(Long userId, UserRequestDTO requestDTO) {
 		try {
 			User user = repository.getReferenceById(userId);
 			if (!user.getAddress().getCep().equals(requestDTO.getCep())) {
@@ -75,7 +73,7 @@ public class UserService {
 		repository.deleteById(userId);
 	}
 
-	private void updateAddress(User user, String cep) {
+	void updateAddress(User user, String cep) {
 		Address address = cepGateway.findAddressByCep(cep).orElseThrow(() -> {
 			throw new ResourceNotFoundException(String.format("Cep %s não foi encontrado.", cep));
 		});

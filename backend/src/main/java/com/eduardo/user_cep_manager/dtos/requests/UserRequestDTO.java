@@ -1,5 +1,7 @@
 package com.eduardo.user_cep_manager.dtos.requests;
 
+import com.eduardo.user_cep_manager.entitites.User;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -22,6 +24,12 @@ public class UserRequestDTO {
 		this.name = name;
 		this.cpf = cpf;
 		this.cep = cep;
+	}
+
+	public UserRequestDTO(User user) {
+		this.name = user.getName();
+		this.cpf = user.getCpf();
+		this.cep = user.getAddress().getCep();
 	}
 
 	public String getName() {

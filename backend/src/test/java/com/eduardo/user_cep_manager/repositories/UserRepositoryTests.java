@@ -16,14 +16,14 @@ public class UserRepositoryTests {
 	private UserRepository userRepository;
 
 	private String existingCpf;
-	private String noExistingCpf;
+	private String nonExistingCpf;
 	private User user;
 
 	@BeforeEach
 	public void setup() throws Exception {
 		user = Factory.createUser();
 		existingCpf = user.getCpf();
-		noExistingCpf = "111111111111";
+		nonExistingCpf = "111111111111";
 
 		userRepository.deleteAll();
 		userRepository.save(user);
@@ -40,7 +40,7 @@ public class UserRepositoryTests {
 
 	@Test
 	public void existsByCpfShouldReturnFalseWhenCpfNotExists() {
-		boolean value = userRepository.existsByCpf(noExistingCpf);
+		boolean value = userRepository.existsByCpf(nonExistingCpf);
 
 		Assertions.assertEquals(false, value);
 		Assertions.assertFalse(value);
@@ -58,7 +58,7 @@ public class UserRepositoryTests {
 
 	@Test
 	public void findByCpfShouldReturnNullWhenCpfNotExists() {
-		User value = userRepository.findByCpf(noExistingCpf);
+		User value = userRepository.findByCpf(nonExistingCpf);
 
 		Assertions.assertNull(value);
 		Assertions.assertEquals(null, value);
